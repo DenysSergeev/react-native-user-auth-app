@@ -1,9 +1,10 @@
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import Welcome from './src/screens/Welcome';
-import Login from './src/screens/Login';
-import Register from './src/screens/Register';
+import Dashboard from './src/screens/Dashboard/Dashboard';
+import Login from './src/screens/Login/Login';
+import Register from './src/screens/Register/Register';
+import Welcome from './src/screens/Welcome/Welcome';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name='Welcome' component={Welcome} />
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Register' component={Register} />
+        <Stack.Screen name='Dashboard' component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );
