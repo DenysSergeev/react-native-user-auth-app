@@ -40,28 +40,12 @@ const loginStyles = StyleSheet.create({
     fontSize: 20,
   },
   createAccountButton: {
-    padding: 10,
+    paddingTop: 10,
   },
   createAccountText: {
     color: '#000',
     textAlign: 'center',
     fontSize: 16,
-  },
-  continueWithText: {
-    color: '#1f41bb',
-    textAlign: 'center',
-    fontSize: 16,
-  },
-  socialButtonsContainer: {
-    marginTop: 40,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  socialButton: {
-    padding: 10,
-    backgroundColor: '#ddd',
-    borderRadius: 5,
-    marginHorizontal: 10,
   },
 });
 

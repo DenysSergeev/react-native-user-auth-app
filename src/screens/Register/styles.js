@@ -35,7 +35,7 @@ const registerStyles = StyleSheet.create({
     fontSize: 20,
   },
   haveAccountButton: {
-    padding: 10,
+    paddingTop: 20,
   },
   haveAccountText: {
     color: '#000',
@@ -48,18 +48,7 @@ const registerStyles = StyleSheet.create({
     fontSize: 14,
   },
   buttonsContainer: {
-    marginVertical: 30,
-  },
-  socialButtonsContainer: {
-    marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  socialButton: {
-    padding: 10,
-    backgroundColor: '#ddd',
-    borderRadius: 5,
-    marginHorizontal: 10,
+    marginVertical: 0,
   },
 });
 

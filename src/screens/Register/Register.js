@@ -7,9 +7,10 @@ import {
   View,
 } from 'react-native';
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import AppTextInput from '../../components/AppTextInput';
 import { registerUser } from '../../server/server';
+import AppTextInput from '../../shared/AppTextInput/AppTextInput';
+import SocialLoginButtons from '../../shared/SocialLoginButtons/SocialLoginButtons';
+import { validateInputs } from '../../utils/validation/validation';
 import registerStyles from './styles';
 
 const Register = ({ navigation }) => {
@@ -18,11 +19,15 @@ const Register = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleRegister = async () => {
     try {
+      if (!validateInputs(name, email, password, confirmPassword)) {
+        return;
+      }
+
       const newUser = await registerUser(name, email, password);
-      console.log('User registered:', newUser);
 
       navigate('Dashboard', { name: newUser.name });
     } catch (error) {
@@ -58,9 +63,17 @@ const Register = ({ navigation }) => {
             value={password}
             onChangeText={text => setPassword(text)}
           />
-          <AppTextInput placeholder='Confirm Password' />
+          <AppTextInput
+            placeholder='Confirm Password'
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={text => setConfirmPassword(text)}
+          />
         </View>
-        <TouchableOpacity onPress={handleRegister} style={registerStyles.signUpButton}>
+        <TouchableOpacity
+          onPress={handleRegister}
+          style={registerStyles.signUpButton}
+        >
           <Text style={registerStyles.signUpButtonText}>Sign up</Text>
         </TouchableOpacity>
 
@@ -68,30 +81,18 @@ const Register = ({ navigation }) => {
           onPress={() => navigate('Login')}
           style={registerStyles.haveAccountButton}
         >
-          <Text style={registerStyles.haveAccountText}>Already have an account</Text>
+          <Text style={registerStyles.haveAccountText}>
+            Already have an account
+          </Text>
         </TouchableOpacity>
 
         <View style={registerStyles.buttonsContainer}>
-          <Text style={registerStyles.continueWithText}>or continue with</Text>
-          <View style={registerStyles.socialButtonsContainer}>
-            <View style={registerStyles.socialButtonsContainer}>
-              <TouchableOpacity style={registerStyles.socialButton}>
-                <Ionicons name='logo-google' color='#000' size={25} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={registerStyles.socialButton}>
-                <Ionicons name='logo-apple' color='#000' size={25} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={registerStyles.socialButton}>
-                <Ionicons name='logo-twitter' color='#000' size={25} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={registerStyles.socialButton}>
-                <Ionicons name='logo-facebook' color='#000' size={25} />
-              </TouchableOpacity>
-            </View>
-          </View>
+          <SocialLoginButtons
+            onPressGoogle={() => {}}
+            onPressApple={() => {}}
+            onPressTwitter={() => {}}
+            onPressFacebook={() => {}}
+          />
         </View>
       </View>
     </SafeAreaView>

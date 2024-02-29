@@ -9,7 +9,6 @@ const Dashboard = ({ route }) => {
   const navigation = useNavigation();
 
   const handleLogout = async () => {
-    // await logoutUser();
     navigation.navigate('Welcome');
   };
 
