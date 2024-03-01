@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import { TextInput } from 'react-native';
+import { TextInput, Text, View } from 'react-native';
 import styles from './styles';
 
-const AppTextInput = ({ ...otherProps }) => {
+const AppTextInput = ({ error, ...otherProps }) => {
   const [focused, setFocused] = useState(false);
 
   return (
-    <TextInput
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-      placeholderTextColor={'#626262'}
-      autoCapitalize='none'
-      style={[styles.input, focused && styles.focusedInput]}
-      {...otherProps}
-    />
+    <View>
+      <TextInput
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        placeholderTextColor={'#626262'}
+        autoCapitalize='none'
+        style={[styles.input, focused && styles.focusedInput]}
+        {...otherProps}
+      />
+      {error && <Text style={styles.errorText}>{error}</Text>}
+    </View>
   );
 };
 

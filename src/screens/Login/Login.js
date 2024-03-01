@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import { loginUser } from '../../server/server';
 import AppTextInput from '../../shared/AppTextInput/AppTextInput';
+import { validateLogin } from '../../utils/validation/validation';
 import SocialLoginButtons from '../../shared/SocialLoginButtons/SocialLoginButtons';
 
 import loginStyles from './styles';
@@ -20,19 +21,27 @@ const Login = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState({});
 
   const handleLogin = async () => {
     try {
+      setError({});
+
+      const errorMessage = validateLogin(email, password);
+
+      if (Object.keys(errorMessage).length > 0) {
+        setError(errorMessage);
+        return;
+      }
+
       const user = await loginUser(email, password);
       if (user) {
         await AsyncStorage.setItem('user', JSON.stringify(user));
-
         navigate('Dashboard', { name: user.name });
       } else {
         Alert.alert('Login Failed', 'Invalid email or password');
       }
     } catch (error) {
-      console.error('Error logging in:', error);
       Alert.alert('Login Failed', 'Invalid email or password');
     }
   };
@@ -56,12 +65,14 @@ const Login = ({ navigation }) => {
             placeholder='Email'
             value={email}
             onChangeText={text => setEmail(text)}
+            error={error.email}
           />
           <AppTextInput
             placeholder='Password'
             secureTextEntry
             value={password}
             onChangeText={text => setPassword(text)}
+            error={error.password}
           />
         </View>
 

@@ -18,6 +18,11 @@ const stylesAppTextInput = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 10,
   },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: 5,
+  },
 });
 
 export default stylesAppTextInput;

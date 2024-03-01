@@ -1,5 +1,3 @@
-import { Alert } from 'react-native';
-
 export const isValidName = name => {
   const nameRegex = /^[a-zA-Z]+$/;
   return nameRegex.test(name);
@@ -14,21 +12,42 @@ export const validatePassword = (password, confirmPassword) => {
   return password === confirmPassword;
 };
 
-export const validateInputs = (name, email, password, confirmPassword) => {
-  if (!isValidName(name) || !isValidEmail(email)) {
-    Alert.alert('Error', 'Please enter valid name and email');
-    return false;
+export const validateRegistr = (name, email, password, confirmPassword) => {
+  const errors = {};
+
+  if (!isValidName(name)) {
+    errors.name = 'Please enter a valid name';
   }
 
-  if (!password || !confirmPassword) {
-    Alert.alert('Error', 'Please enter both password and confirm password');
-    return false;
+  if (!isValidEmail(email)) {
+    errors.email = 'Please enter a valid email address';
+  }
+
+  if (!password) {
+    errors.password = 'Please enter a password';
+  } else if (password.length < 6) {
+    errors.password = 'Password must be at least 6 characters long';
   }
 
   if (!validatePassword(password, confirmPassword)) {
-    Alert.alert('Error', 'Password and Confirm Password do not match');
-    return false;
+    errors.confirmPassword = 'Password and Confirm Password do not match';
   }
 
-  return true;
+  return errors;
+};
+
+export const validateLogin = (email, password) => {
+  const errors = {};
+
+  if (!isValidEmail(email)) {
+    errors.email = 'Please enter a valid email address';
+  }
+
+  if (!password) {
+    errors.password = 'Please enter a password';
+  } else if (password.length < 6) {
+    errors.password = 'Password must be at least 6 characters long';
+  }
+
+  return errors;
 };

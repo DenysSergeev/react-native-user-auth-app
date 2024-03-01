@@ -10,7 +10,7 @@ import {
 import { registerUser } from '../../server/server';
 import AppTextInput from '../../shared/AppTextInput/AppTextInput';
 import SocialLoginButtons from '../../shared/SocialLoginButtons/SocialLoginButtons';
-import { validateInputs } from '../../utils/validation/validation';
+import { validateRegistr } from '../../utils/validation/validation';
 import registerStyles from './styles';
 
 const Register = ({ navigation }) => {
@@ -20,10 +20,21 @@ const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState({});
 
   const handleRegister = async () => {
     try {
-      if (!validateInputs(name, email, password, confirmPassword)) {
+      setError({});
+
+      const errorMessage = validateRegistr(
+        name,
+        email,
+        password,
+        confirmPassword
+      );
+
+      if (Object.keys(errorMessage).length > 0) {
+        setError(errorMessage);
         return;
       }
 
@@ -51,23 +62,27 @@ const Register = ({ navigation }) => {
             placeholder='Name'
             value={name}
             onChangeText={text => setName(text)}
+            error={error.name}
           />
           <AppTextInput
             placeholder='Email'
             value={email}
             onChangeText={text => setEmail(text)}
+            error={error.email}
           />
           <AppTextInput
             placeholder='Password'
             secureTextEntry
             value={password}
             onChangeText={text => setPassword(text)}
+            error={error.password}
           />
           <AppTextInput
             placeholder='Confirm Password'
             secureTextEntry
             value={confirmPassword}
             onChangeText={text => setConfirmPassword(text)}
+            error={error.confirmPassword}
           />
         </View>
         <TouchableOpacity
